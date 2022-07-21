@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -17,6 +16,8 @@ void PrintTopValue(vector < pair<int, string>>& vect, int number);
 void Search4Value(map<string, int>& mappy, string val);
 void TestPassword(map<string, int>& mappy, string key, vector<float>& wt);
 int FindRepeats(string key);
+string Strength(float val);
+bool CheckChoice(string check);
 int main()
 {
     map<string, int> mapp;
@@ -29,8 +30,69 @@ int main()
     cout << "1: To test the strength of a password." << endl;
     cout << "2: To print the top most common values." << endl;
     cout << "3. To search for a two letter combination and see how many times it appears in the top 100K passwords." << endl;
-    cout << "Or anythings else to quit" << endl;
-    TestPassword(mapp, "nfi9682k0sy582md", weights);
+    cout << "Or anythings else to quit." << endl;
+    string choice = "";
+    getline(cin, choice);
+
+    while (choice == "1" || choice == "2" || choice == "3")
+    {
+        if (choice == "1")
+        {
+            cout << "Please enter a password to test that is between 4 and 16 characters." << endl;
+            getline(cin, choice);
+            if (choice.size() > 16 || choice.size() < 4)
+            {
+                cout << "You have entered an invalid password." << endl;
+            }
+            else
+            {
+                TestPassword(mapp, choice, weights);
+            }
+
+        }
+        else if (choice == "2")
+        {
+            cout << "Please enter how many top letter combinations you would like to see." << endl;
+            getline(cin, choice);
+            int sender = 0;
+            try {
+                sender = stoi(choice);
+            }
+            catch (invalid_argument& e)
+            {
+                cout << "That is not a valid number." << endl;
+            }
+            PrintTopValue(vec, sender);
+
+        }
+        else if (choice == "3")
+        {
+            cout << "Please enter a TWO character combination that you would like to check for matches in most common passwords." << endl;
+            getline(cin, choice);
+            if (choice.size() < 2)
+            {
+                cout << "That is not enough letters." << endl;
+            }
+            else if (choice.size() > 2)
+            {
+                string index = choice.substr(0, 2);
+                Search4Value(mapp, index);
+            }
+            else
+            {
+                Search4Value(mapp, choice);
+            }
+        }
+        cout << "Please enter a value: " << endl;
+        cout << "1: To test the strength of a password." << endl;
+        cout << "2: To print the top most common values." << endl;
+        cout << "3. To search for a two letter combination and see how many times it appears in the top 100K passwords." << endl;
+        cout << "Or anythings else to quit." << endl;
+        
+        getline(cin, choice);
+    }
+    cout << "Thank you for using the password strength checker!" << endl;
+
     return 0;
 }
 
@@ -156,8 +218,8 @@ void TestPassword(map<string, int>& mappy, string key, vector<float>& wt)
         }
 
     }
-    cout << "The strength of this password was: " << sum << endl;
-
+    cout << "The strength of the password " << key <<" was " << sum << endl;
+    cout << "This password is " << Strength(sum) << endl;
 
 }
 
@@ -177,6 +239,40 @@ int FindRepeats(string key)
     }
     return value;
 }
+
+string Strength(float val)
+{
+    if (val >= 500)
+    {
+        return "very weak";
+    }
+    else if (val < 500 && val >= 150)
+    {
+        return "weak";
+    }
+    else if (val < 150 && val >= 100)
+    {
+        return "neutral strength";
+    }
+    else if (val < 100 && val >= 40)
+    {
+        return "strong";
+    }
+    else if(val < 40 && val >= 18)
+    {
+        return "very strong";
+    }
+    else {
+        return "exceptionally strong";
+    }
+}
+
+bool CheckChoice(string check)
+{
+    return false;
+}
+
+
 
 
 
