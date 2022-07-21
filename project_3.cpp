@@ -17,7 +17,7 @@ void Search4Value(map<string, int>& mappy, string val);
 void TestPassword(map<string, int>& mappy, string key, vector<float>& wt);
 int FindRepeats(string key);
 string Strength(float val);
-bool CheckChoice(string check);
+
 int main()
 {
     map<string, int> mapp;
@@ -267,10 +267,7 @@ string Strength(float val)
     }
 }
 
-bool CheckChoice(string check)
-{
-    return false;
-}
+
 
 
 
